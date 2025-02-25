@@ -1,7 +1,6 @@
-import {BasePage} from "./BasePage.js";
+import { BasePage } from "./BasePage.js";
 
 export class LoginPage extends BasePage {
-  
   // ADD YOUR LOCATORS HERE...
   /**
    * @param {import('playwright').Page} page
@@ -14,7 +13,6 @@ export class LoginPage extends BasePage {
       "//button[text()='Sign in' and @type='submit']"
     );
     this.loginErrorMessage = page.locator("//div[@class='alert alert-danger']");
-    
   }
 
   /**
@@ -54,5 +52,19 @@ export class LoginPage extends BasePage {
    */
   async clickLoginButton() {
     await this.loginButton.click();
+  }
+
+  async login(user_type) {
+    if (user_type == "student") {
+      await this.enterUsername(this.studentUsername);
+      await this.enterPassword(this.studentPassword);
+      await this.clickLoginButton();
+    } else if (user_type == "admin") {
+      await this.enterUsername(this.adminUsername);
+      await this.enterPassword(this.adminPassword);
+      await this.clickLoginButton();
+    } else {
+      throw new Error("Invalid user type. Please use student or admin.");
+    }
   }
 }
